@@ -231,6 +231,10 @@ public class SavingsAccountReadPlatformServiceImpl implements SavingsAccountRead
                     sqlBuilder.append(sqlGenerator.limit(searchParameters.getLimit()));
                 }
             }
+
+            if (null != searchParameters.getBirthday()){
+                sqlBuilder.append(" and ");
+            }
         }
         final Object[] finalObjectArray = Arrays.copyOf(objectArray, arrayPos);
         return this.paginationHelper.fetchPage(this.jdbcTemplate, sqlBuilder.toString(), finalObjectArray, this.savingAccountMapper);

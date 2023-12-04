@@ -19,6 +19,7 @@
 package org.apache.fineract.infrastructure.core.service;
 
 import org.apache.commons.lang3.StringUtils;
+import java.util.Date;
 
 public final class SearchParameters {
 
@@ -29,6 +30,7 @@ public final class SearchParameters {
     private final String hierarchy;
     private final String firstname;
     private final String lastname;
+    private final Date birthday;
     private final String status;
     private final Integer offset;
     private final Integer limit;
@@ -181,7 +183,7 @@ public final class SearchParameters {
         return new SearchParameters(provisioningEntryId, officeId, productId, categoryId, offset, limit);
     }
 
-    public static SearchParameters forSavings(final String sqlSearch, final String externalId, final Integer offset, final Integer limit,
+    public static SearchParameters forSavings(final String sqlSearch, final String externalId, final Date birthday, final Integer offset, final Integer limit,
             final String orderBy, final String sortOrder) {
 
         final Integer maxLimitAllowed = getCheckedLimit(limit);
@@ -251,6 +253,7 @@ public final class SearchParameters {
         this.officeId = officeId;
         this.externalId = externalId;
         this.name = name;
+        this.birthday = null;
         this.hierarchy = hierarchy;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -269,7 +272,35 @@ public final class SearchParameters {
         this.categoryId = null;
         this.isSelfUser = isSelfUser;
         this.status = null;
+    }
 
+    private SearchParameters(final String sqlSearch, final Long officeId, final String externalId, final String name,
+            final Date birthday, final String hierarchy, final String firstname, final String lastname, final Integer offset,
+            final Integer limit, final String orderBy, final String sortOrder, final Long staffId, final String accountNo,
+            final Long loanId, final Long savingsId, final Boolean orphansOnly, boolean isSelfUser) {
+        this.sqlSearch = sqlSearch;
+        this.officeId = officeId;
+        this.externalId = externalId;
+        this.name = name;
+        this.birthday = birthday;
+        this.hierarchy = hierarchy;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.offset = offset;
+        this.limit = limit;
+        this.orderBy = orderBy;
+        this.sortOrder = sortOrder;
+        this.staffId = staffId;
+        this.accountNo = accountNo;
+        this.loanId = loanId;
+        this.savingsId = savingsId;
+        this.orphansOnly = orphansOnly;
+        this.currencyCode = null;
+        this.provisioningEntryId = null;
+        this.productId = null;
+        this.categoryId = null;
+        this.isSelfUser = isSelfUser;
+        this.status = null;
     }
 
     private SearchParameters(final String sqlSearch, final Long officeId, final String externalId, final String name,
@@ -280,6 +311,7 @@ public final class SearchParameters {
         this.officeId = officeId;
         this.externalId = externalId;
         this.name = name;
+        this.birthday = null;
         this.hierarchy = hierarchy;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -309,6 +341,7 @@ public final class SearchParameters {
         this.officeId = officeId;
         this.externalId = externalId;
         this.name = name;
+        this.birthday = null;
         this.hierarchy = hierarchy;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -334,6 +367,7 @@ public final class SearchParameters {
         this.sqlSearch = null;
         this.externalId = null;
         this.name = null;
+        this.birthday = null;
         this.hierarchy = null;
         this.firstname = null;
         this.lastname = null;
@@ -364,6 +398,7 @@ public final class SearchParameters {
         this.officeId = officeId;
         this.externalId = externalId;
         this.name = name;
+        this.birthday = null;
         this.hierarchy = hierarchy;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -460,6 +495,8 @@ public final class SearchParameters {
     public String getLastname() {
         return this.lastname;
     }
+
+    public Date getBirthday() { return this.birthday; }
 
     public String getStatus() {
         return this.status;
