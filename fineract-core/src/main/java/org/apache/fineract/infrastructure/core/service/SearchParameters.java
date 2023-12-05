@@ -18,8 +18,8 @@
  */
 package org.apache.fineract.infrastructure.core.service;
 
+import java.time.LocalDate;
 import org.apache.commons.lang3.StringUtils;
-import java.util.Date;
 
 public final class SearchParameters {
 
@@ -30,7 +30,8 @@ public final class SearchParameters {
     private final String hierarchy;
     private final String firstname;
     private final String lastname;
-    private final Date birthday;
+    private final Long birthdayMonth;
+    private final Long birthdayDay;
     private final String status;
     private final Integer offset;
     private final Integer limit;
@@ -183,8 +184,8 @@ public final class SearchParameters {
         return new SearchParameters(provisioningEntryId, officeId, productId, categoryId, offset, limit);
     }
 
-    public static SearchParameters forSavings(final String sqlSearch, final String externalId, final Date birthday, final Integer offset, final Integer limit,
-            final String orderBy, final String sortOrder) {
+    public static SearchParameters forSavings(final String sqlSearch, final String externalId, final Long birthdayMonth, final Long birthdayDay, final Integer offset,
+            final Integer limit, final String orderBy, final String sortOrder) {
 
         final Integer maxLimitAllowed = getCheckedLimit(limit);
         final Long staffId = null;
@@ -194,8 +195,8 @@ public final class SearchParameters {
         final Boolean orphansOnly = false;
         final boolean isSelfUser = false;
 
-        return new SearchParameters(sqlSearch, null, externalId, null, null, null, null, offset, maxLimitAllowed, orderBy, sortOrder,
-                staffId, accountNo, loanId, savingsId, orphansOnly, isSelfUser);
+        return new SearchParameters(sqlSearch, null, externalId, null, birthdayMonth, birthdayDay, null, null, null, offset, maxLimitAllowed, orderBy,
+                sortOrder, staffId, accountNo, loanId, savingsId, orphansOnly, isSelfUser);
     }
 
     public static SearchParameters forAccountTransfer(final String sqlSearch, final String externalId, final Integer offset,
@@ -253,7 +254,8 @@ public final class SearchParameters {
         this.officeId = officeId;
         this.externalId = externalId;
         this.name = name;
-        this.birthday = null;
+        this.birthdayMonth = null;
+        this.birthdayDay = null;
         this.hierarchy = hierarchy;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -274,15 +276,16 @@ public final class SearchParameters {
         this.status = null;
     }
 
-    private SearchParameters(final String sqlSearch, final Long officeId, final String externalId, final String name,
-            final Date birthday, final String hierarchy, final String firstname, final String lastname, final Integer offset,
-            final Integer limit, final String orderBy, final String sortOrder, final Long staffId, final String accountNo,
-            final Long loanId, final Long savingsId, final Boolean orphansOnly, boolean isSelfUser) {
+    private SearchParameters(final String sqlSearch, final Long officeId, final String externalId, final String name, final Long birthdayMonth,
+            final Long birthdayDay, final String hierarchy, final String firstname, final String lastname, final Integer offset, final Integer limit,
+            final String orderBy, final String sortOrder, final Long staffId, final String accountNo, final Long loanId,
+            final Long savingsId, final Boolean orphansOnly, boolean isSelfUser) {
         this.sqlSearch = sqlSearch;
         this.officeId = officeId;
         this.externalId = externalId;
         this.name = name;
-        this.birthday = birthday;
+        this.birthdayMonth = birthdayMonth;
+        this.birthdayDay = birthdayDay;
         this.hierarchy = hierarchy;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -311,7 +314,8 @@ public final class SearchParameters {
         this.officeId = officeId;
         this.externalId = externalId;
         this.name = name;
-        this.birthday = null;
+        this.birthdayMonth = null;
+        this.birthdayDay = null;
         this.hierarchy = hierarchy;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -341,7 +345,8 @@ public final class SearchParameters {
         this.officeId = officeId;
         this.externalId = externalId;
         this.name = name;
-        this.birthday = null;
+        this.birthdayMonth = null;
+        this.birthdayDay = null;
         this.hierarchy = hierarchy;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -367,7 +372,8 @@ public final class SearchParameters {
         this.sqlSearch = null;
         this.externalId = null;
         this.name = null;
-        this.birthday = null;
+        this.birthdayMonth = null;
+        this.birthdayDay = null;
         this.hierarchy = null;
         this.firstname = null;
         this.lastname = null;
@@ -398,7 +404,8 @@ public final class SearchParameters {
         this.officeId = officeId;
         this.externalId = externalId;
         this.name = name;
-        this.birthday = null;
+        this.birthdayMonth = null;
+        this.birthdayDay = null;
         this.hierarchy = hierarchy;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -496,7 +503,13 @@ public final class SearchParameters {
         return this.lastname;
     }
 
-    public Date getBirthday() { return this.birthday; }
+    public Long getBirthdayDay() {
+        return this.birthdayDay;
+    }
+
+    public Long getBirthdayMonth() {
+        return this.birthdayMonth;
+    }
 
     public String getStatus() {
         return this.status;

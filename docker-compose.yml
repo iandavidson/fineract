@@ -19,6 +19,13 @@
 # You can replace and test a more recent version of docker compose
 version: '3.7'
 services:
+  # Frontend service
+  community-app:
+    image: openmf/community-app:latest
+    container_name: mifos-ui
+    restart: always
+    ports:
+      - 9090:80
   # Backend service
   fineractmysql:
     image: mariadb:11.0
